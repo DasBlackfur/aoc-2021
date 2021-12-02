@@ -4,13 +4,16 @@ fn main() {
         input_dir: "input"
         challenges: [
             {
-                "2021-1-1": day_one_part_one
+                "2021-1-1": day_one_part_one,
             }
             {
                 "2021-1-2": day_one_part_two
             }
             {
                 "2021-2-1": day_two_part_one
+            }
+            {
+                "2021-2-2": day_two_part_two
             }
         ]
     }
@@ -68,4 +71,31 @@ fn day_two_part_one(input: &str) -> String {
         }
     }
     (depth as u64 * pos as u64).to_string()
+}
+
+fn day_two_part_two(input: &str) -> String {
+    let mut depth: i64 = 0;
+    let mut pos: i64 = 0;
+    let mut aim: i64 = 0;
+
+    for line in input.lines() {
+        let arr = line.split(' ').collect::<Vec<&str>>();
+        match (
+            arr.get(0).unwrap(),
+            arr.get(1).unwrap().parse::<i64>().unwrap(),
+        ) {
+            (&"forward", i) => {
+                pos += i;
+                depth += aim * i;
+            },
+            (&"down", i) => {
+                aim += i;
+            },
+            (&"up", i) => {
+                aim -= i;
+            },
+            (_, _) => panic!("WHAAAAT?"),
+        }
+    }
+    (depth as i64 * pos as i64).to_string()
 }
